@@ -11,4 +11,10 @@ extension String {
     func returnLotteryDateString() -> String {
         return "\(self) 추첨"
     }
+    
+    func convertToDate() -> Date {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd"
+        return formatter.date(from: self) ?? Date()
+    }
 }
