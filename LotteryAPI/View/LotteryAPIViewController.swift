@@ -24,14 +24,14 @@ protocol LotteryAPIViewControllerProtocol: AnyObject {
 
 class LotteryAPIViewController: UIViewController, LotteryAPIViewControllerProtocol {
     
-    var lottoRoundTextField: UITextField = {
+    lazy var lottoRoundTextField: UITextField = {
         let tf = UITextField()
         tf.textAlignment = .center
         tf.textColor = UIColor.black
         tf.tintColor = UIColor.black
         tf.borderStyle = .roundedRect
         tf.layer.borderColor = UIColor.lightGray.cgColor
-        tf.text = "1154"
+        tf.inputView = lottoRoundPickerView
         return tf
     }()
     
@@ -90,6 +90,12 @@ class LotteryAPIViewController: UIViewController, LotteryAPIViewControllerProtoc
         }
     }
     
+    var recentLotteryRound: Int = 1154
+    
+    var lotteryRoundList: Array<Int> {
+        return Array(1...recentLotteryRound)
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = UIColor.white
@@ -99,13 +105,15 @@ class LotteryAPIViewController: UIViewController, LotteryAPIViewControllerProtoc
         configurePickerView()
         configureCollectionView()
         
-        AF.request("https://www.dhlottery.co.kr/common.do?method=getLottoNumber&drwNo=\(1154)").responseDecodable(of: LotteryData.self) { response in
+        AF.request("https://www.dhlottery.co.kr/common.do?method=getLottoNumber&drwNo=\(recentLotteryRound)").responseDecodable(of: LotteryData.self) { response in
             switch response.result {
             case .success(let data):
                 self.currentData = data
             case .failure(let error): print(error)
             }
         }
+        lottoRoundTextField.text = "\(recentLotteryRound)"
+        lottoRoundPickerView.selectRow(lotteryRoundList.firstIndex(of: recentLotteryRound)!, inComponent: 0, animated: false)
     }
     
     func configureHierarchy() {
@@ -157,10 +165,6 @@ class LotteryAPIViewController: UIViewController, LotteryAPIViewControllerProtoc
 
 extension LotteryAPIViewController: UIPickerViewDelegate, UIPickerViewDataSource {
     func configurePickerView() {
-        lottoRoundTextField.inputView = lottoRoundPickerView
-        
-        // TODO: PickerView 초기값을 설정하고 싶은데 어디 둬야할까?
-        lottoRoundPickerView.selectRow(1153, inComponent: 0, animated: false)
     }
     
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
@@ -168,13 +172,13 @@ extension LotteryAPIViewController: UIPickerViewDelegate, UIPickerViewDataSource
     }
     
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        return 1153
+        return lotteryRoundList.count
     }
     
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
         
         // TODO: String(row) 와 "\(row)" 차이는?
-        return String(row + 1)
+        return String(lotteryRoundList[row])
     }
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
