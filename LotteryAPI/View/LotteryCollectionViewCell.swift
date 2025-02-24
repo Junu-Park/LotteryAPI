@@ -33,14 +33,21 @@ final class LotteryCollectionViewCell: UICollectionViewCell {
     override init(frame: CGRect) {
         super.init(frame: frame)
         
-        contentView.addSubviews(numberLabel, bunusLabel)
-        
-        numberLabel.snp.makeConstraints { make in
+        self.configureHierarchy()
+        self.configureLayout()
+    }
+    
+    func configureHierarchy() {
+        self.contentView.addSubviews(self.numberLabel, self.bunusLabel)
+    }
+    
+    func configureLayout() {
+        self.numberLabel.snp.makeConstraints { make in
             make.top.horizontalEdges.equalToSuperview()
-            make.height.equalTo(numberLabel.snp.width)
+            make.height.equalTo(self.numberLabel.snp.width)
         }
-        bunusLabel.snp.makeConstraints { make in
-            make.top.equalTo(numberLabel.snp.bottom).offset(4)
+        self.bunusLabel.snp.makeConstraints { make in
+            make.top.equalTo(self.numberLabel.snp.bottom).offset(4)
             make.horizontalEdges.equalToSuperview()
         }
     }
