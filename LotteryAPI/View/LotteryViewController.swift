@@ -1,5 +1,5 @@
 //
-//  LotteryAPIViewController.swift
+//  LotteryViewController.swift
 //  LotteryAPI
 //
 //  Created by 박준우 on 1/14/25.
@@ -9,7 +9,7 @@ import UIKit
 import SnapKit
 import Alamofire
 
-protocol LotteryAPIViewControllerProtocol: AnyObject {
+protocol LotteryViewControllerProtocol: AnyObject {
     // TODO: 변수도 한 번 해봤는데...굳이...? 일회성인데...?
     var lottoRoundTextField: UITextField { get }
     var lottoRoundPickerView: UIPickerView { get }
@@ -22,7 +22,7 @@ protocol LotteryAPIViewControllerProtocol: AnyObject {
     func configureLayout()
 }
 
-class LotteryAPIViewController: UIViewController, LotteryAPIViewControllerProtocol {
+class LotteryViewController: UIViewController, LotteryViewControllerProtocol {
     
     lazy var lottoRoundTextField: UITextField = {
         let tf = UITextField()
@@ -35,7 +35,6 @@ class LotteryAPIViewController: UIViewController, LotteryAPIViewControllerProtoc
         return tf
     }()
     
-    // TODO: 여기에서 delegate / dataSource 선언해도 해도 될까? => self 써야하는데 초기화되는 과정에는 불가능! lazy를 붙여줘야!
     lazy var lottoRoundPickerView: UIPickerView = {
         let pv = UIPickerView()
         pv.delegate = self
@@ -82,7 +81,7 @@ class LotteryAPIViewController: UIViewController, LotteryAPIViewControllerProtoc
         return cv
     }()
     
-    var currentData: LotteryData = LotteryData.lotteryMockData {
+    var currentData: Lottery = Mock.lottery {
         didSet {
             lottoDateLabel.text = currentData.drwNoDate.returnLotteryDateString()
             lottoResultLabel.attributedText = currentData.drwNo.returnLotteryResultString()
@@ -163,7 +162,7 @@ class LotteryAPIViewController: UIViewController, LotteryAPIViewControllerProtoc
     }
 }
 
-extension LotteryAPIViewController: UIPickerViewDelegate, UIPickerViewDataSource {
+extension LotteryViewController: UIPickerViewDelegate, UIPickerViewDataSource {
     func configurePickerView() {
     }
     
@@ -184,7 +183,7 @@ extension LotteryAPIViewController: UIPickerViewDelegate, UIPickerViewDataSource
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         let round: Int = row + 1
         lottoRoundTextField.text = "\(round)"
-        AF.request("https://www.dhlottery.co.kr/common.do?method=getLottoNumber&drwNo=\(round)").responseDecodable(of: LotteryData.self) { response in
+        AF.request("https://www.dhlottery.co.kr/common.do?method=getLottoNumber&drwNo=\(round)").responseDecodable(of: Lottery.self) { response in
             switch response.result {
             case .success(let data):
                 self.currentData = data
@@ -195,7 +194,7 @@ extension LotteryAPIViewController: UIPickerViewDelegate, UIPickerViewDataSource
     }
 }
 
-extension LotteryAPIViewController: UICollectionViewDelegate, UICollectionViewDataSource {
+extension LotteryViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     func configureCollectionView() {
         collectionView.register(LotteryCollectionViewCell.self, forCellWithReuseIdentifier: LotteryCollectionViewCell.id)
     }
