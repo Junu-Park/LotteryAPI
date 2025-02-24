@@ -7,11 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		515D016C2D6C921E00714D39 /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = 515D016B2D6C921E00714D39 /* .gitignore */; };
 		516C36912D36534A0047CDB9 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 516C36902D36534A0047CDB9 /* SnapKit */; };
 		516C36B32D366E7B0047CDB9 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 516C36B22D366E7B0047CDB9 /* Alamofire */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		515D016B2D6C921E00714D39 /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
 		516C358C2D3640970047CDB9 /* LotteryAPI.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LotteryAPI.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -52,6 +54,7 @@
 		516C35832D3640970047CDB9 = {
 			isa = PBXGroup;
 			children = (
+				515D016B2D6C921E00714D39 /* .gitignore */,
 				516C358E2D3640970047CDB9 /* LotteryAPI */,
 				516C358D2D3640970047CDB9 /* Products */,
 			);
@@ -135,6 +138,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				515D016C2D6C921E00714D39 /* .gitignore in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
