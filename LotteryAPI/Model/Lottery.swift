@@ -1,5 +1,5 @@
 //
-//  LotteryData.swift
+//  Lottery.swift
 //  LotteryAPI
 //
 //  Created by 박준우 on 1/14/25.
@@ -8,12 +8,8 @@
 import UIKit
 import Alamofire
 
-struct LotteryData: Decodable {
-//    let totSellamnt: Int
+struct Lottery: Decodable {
     let returnValue: String
-//    let firstWinamnt: Int
-//    let firstPrzwnerCo: Int
-//    let firstAccumamnt: Int
     let drwNoDate: String
     let drwNo: Int
     let drwtNo1: Int
@@ -23,8 +19,6 @@ struct LotteryData: Decodable {
     let drwtNo5: Int
     let drwtNo6: Int
     let bnusNo: Int
-    
-    static let lotteryMockData: LotteryData = LotteryData(returnValue: "success", drwNoDate: "2025-01-11", drwNo: 1154, drwtNo1: 4, drwtNo2: 8, drwtNo3: 22, drwtNo4: 26, drwtNo5: 32, drwtNo6: 38, bnusNo: 27)
     
     func getDrwNo(index: Int) -> Int? {
         switch index {
