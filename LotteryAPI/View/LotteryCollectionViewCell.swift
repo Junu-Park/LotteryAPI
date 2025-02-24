@@ -8,7 +8,7 @@
 import UIKit
 import SnapKit
 
-class LotteryCollectionViewCell: UICollectionViewCell {
+final class LotteryCollectionViewCell: UICollectionViewCell {
     
     static let id = "LotteryCollectionViewCell"
     

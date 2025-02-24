@@ -22,7 +22,7 @@ protocol LotteryViewControllerProtocol: AnyObject {
     func configureLayout()
 }
 
-class LotteryViewController: UIViewController, LotteryViewControllerProtocol {
+final class LotteryViewController: UIViewController, LotteryViewControllerProtocol {
     
     lazy var lottoRoundTextField: UITextField = {
         let tf = UITextField()
