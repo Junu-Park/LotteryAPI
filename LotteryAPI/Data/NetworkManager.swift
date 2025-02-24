@@ -37,7 +37,7 @@ final class NetworkManager {
             let request = URLRequest(url: url)
             
             URLSession.shared.dataTask(with: request) { data, response, error in
-                if error == nil {
+                if error != nil {
                     value.onError(LotteryError.requestError)
                 }
                 
@@ -57,6 +57,8 @@ final class NetworkManager {
                     value.onError(LotteryError.decodingError)
                 }
             }
+            .resume()
+            
             return Disposables.create {
                 print("끝")
             }
@@ -78,7 +80,7 @@ final class NetworkManager {
             let request = URLRequest(url: url)
             
             URLSession.shared.dataTask(with: request) { data, response, error in
-                if error == nil {
+                if error != nil {
                     value(.failure(LotteryError.requestError))
                 }
                 
